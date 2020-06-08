@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutterapp/authentications.dart';
+import 'package:flutterapp/functions.dart';
 import 'package:flutterapp/signup.dart';
+
+import 'chats.dart';
 
 void main() {
   runApp(
@@ -51,6 +55,8 @@ class _SignInState extends State<SignIn> {
                         controller: e,
                         style: TextStyle(color: Colors.black, fontSize: 16),
                         decoration: InputDecoration(
+                          labelText: 'Email',
+                          labelStyle: TextStyle(color: Colors.pink),
                           hintText: 'Enter email',
                           hintStyle: TextStyle(color: Colors.black38),
                           focusedBorder: UnderlineInputBorder(
@@ -71,6 +77,8 @@ class _SignInState extends State<SignIn> {
                         controller: p,
                         style: TextStyle(color: Colors.black, fontSize: 16),
                         decoration: InputDecoration(
+                          labelText: 'Password',
+                          labelStyle: TextStyle(color: Colors.pink),
                           hintText: 'Enter password',
                           hintStyle: TextStyle(color: Colors.black38),
                           focusedBorder: UnderlineInputBorder(
@@ -95,7 +103,10 @@ class _SignInState extends State<SignIn> {
                     child: Container(
                       child: Text(
                         'Forgot password ?',
-                        style: TextStyle(color: Colors.black54, fontSize: 15.0,fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
@@ -104,7 +115,9 @@ class _SignInState extends State<SignIn> {
                   height: 10,
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    signMeIn();
+                  },
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     padding: EdgeInsets.all(10),
@@ -150,9 +163,8 @@ class _SignInState extends State<SignIn> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushReplacement(context,MaterialPageRoute(
-                            builder: (context)=>SignUp()
-                        ));
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (context) => SignUp()));
                       },
                       child: Container(
                         child: Text(
@@ -166,7 +178,6 @@ class _SignInState extends State<SignIn> {
                     ),
                   ],
                 ),
-
               ],
             ),
           ),
@@ -174,4 +185,25 @@ class _SignInState extends State<SignIn> {
       ),
     );
   }
+
+  signMeIn() {
+    if (formKey.currentState.validate()) {
+
+      setState(() {
+        isLoading = true;
+      });
+
+//      new Authentications().signInWithEmailAndPassword(e.text, p.text).then((val) {
+//        print("$val");
+
+//        if (val != null) {
+//          Functions.saveUserLoggedInSharedPreference(true);
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => Chats()));
+//        }
+//      });
+    }
+  }
+
+
 }

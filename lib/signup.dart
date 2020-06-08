@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutterapp/authentications.dart';
+import 'package:flutterapp/chats.dart';
+import 'package:flutterapp/functions.dart';
 import 'package:flutterapp/signin.dart';
 
 void main() {
@@ -49,6 +52,8 @@ class _SignUpState extends State<SignUp> {
                         controller: u,
                         style: TextStyle(color: Colors.black, fontSize: 16),
                         decoration: InputDecoration(
+                          labelText: 'Username',
+                          labelStyle: TextStyle(color: Colors.pink),
                           hintText: 'Enter username',
                           hintStyle: TextStyle(color: Colors.black38),
                           focusedBorder: UnderlineInputBorder(
@@ -62,14 +67,16 @@ class _SignUpState extends State<SignUp> {
                       TextFormField(
                         validator: (val) {
                           return RegExp(
-                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                              .hasMatch(val)
+                                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                  .hasMatch(val)
                               ? null
                               : "Please provide a valid email address.";
                         },
                         controller: e,
                         style: TextStyle(color: Colors.black, fontSize: 16),
                         decoration: InputDecoration(
+                          labelText: 'Email',
+                          labelStyle: TextStyle(color: Colors.pink),
                           hintText: 'Enter email',
                           hintStyle: TextStyle(color: Colors.black38),
                           focusedBorder: UnderlineInputBorder(
@@ -90,6 +97,8 @@ class _SignUpState extends State<SignUp> {
                         controller: p,
                         style: TextStyle(color: Colors.black, fontSize: 16),
                         decoration: InputDecoration(
+                          labelText: 'Password',
+                          labelStyle: TextStyle(color: Colors.pink),
                           hintText: 'Enter password',
                           hintStyle: TextStyle(color: Colors.black38),
                           focusedBorder: UnderlineInputBorder(
@@ -107,7 +116,9 @@ class _SignUpState extends State<SignUp> {
                   height: 20,
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    signMeUp();
+                  },
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     padding: EdgeInsets.all(10),
@@ -153,9 +164,8 @@ class _SignUpState extends State<SignUp> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushReplacement(context,MaterialPageRoute(
-                            builder: (context)=>SignIn()
-                        ));
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (context) => SignIn()));
                       },
                       child: Container(
                         child: Text(
@@ -169,11 +179,30 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ],
                 ),
-                ],
+              ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  signMeUp() {
+    if (formKey.currentState.validate()) {
+//      Functions.saveUserEmailSharedPreference(e.text);
+//      Functions.saveUserNameSharedPreference(u.text);
+
+      setState(() {
+        isLoading = true;
+      });
+
+//      Authentications().signUpWithEmailAndPassword(e.text, p.text).then((val) {
+//        print("$val");
+
+//        Functions.saveUserLoggedInSharedPreference(true);
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => Chats()));
+//      });
+    }
   }
 }
