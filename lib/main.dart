@@ -23,9 +23,9 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return SplashScreen(
-      seconds: 10,
+      seconds: 5,
 //      navigateAfterSeconds: SignIn(),
-    navigateAfterSeconds: Chats(),
+    navigateAfterSeconds: SignIn(),
       title: Text(
         'WhatsUp !',
         style: GoogleFonts.lato(

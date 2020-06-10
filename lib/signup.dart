@@ -5,6 +5,8 @@ import 'package:flutterapp/chats.dart';
 import 'package:flutterapp/functions.dart';
 import 'package:flutterapp/signin.dart';
 
+import 'database.dart';
+
 void main() {
   runApp(
     SignUp(),
@@ -20,6 +22,7 @@ class _SignUpState extends State<SignUp> {
   TextEditingController u = new TextEditingController();
   TextEditingController e = new TextEditingController();
   TextEditingController p = new TextEditingController();
+  Authentications authentications=new Authentications();
 
   final formKey = GlobalKey<FormState>();
 
@@ -45,9 +48,9 @@ class _SignUpState extends State<SignUp> {
                     children: <Widget>[
                       TextFormField(
                         validator: (val) {
-                          return val.length > 6
+                          return val.length > 3
                               ? null
-                              : "Please provide username with more than 6 characters";
+                              : "Please provide username with more than 3 characters";
                         },
                         controller: u,
                         style: TextStyle(color: Colors.black, fontSize: 16),
@@ -189,20 +192,22 @@ class _SignUpState extends State<SignUp> {
 
   signMeUp() {
     if (formKey.currentState.validate()) {
-//      Functions.saveUserEmailSharedPreference(e.text);
-//      Functions.saveUserNameSharedPreference(u.text);
+      Map<String, String> userMap = {"name": u.text, "email": e.text};
+      Functions.saveUserEmailSharedPreference(e.text);
+      Functions.saveUserNameSharedPreference(u.text);
 
       setState(() {
         isLoading = true;
       });
 
-//      Authentications().signUpWithEmailAndPassword(e.text, p.text).then((val) {
-//        print("$val");
+      authentications.signUpWithEmailAndPassword(e.text, p.text).then((val) {
+        print("$val");
 
-//        Functions.saveUserLoggedInSharedPreference(true);
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Chats()));
-//      });
+        Database().uploadUserInfo(userMap);
+        Functions.saveUserLoggedInSharedPreference(true);
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => Chats()));
+      });
     }
   }
 }

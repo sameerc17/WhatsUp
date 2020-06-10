@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -6,6 +7,7 @@ import 'package:flutterapp/functions.dart';
 import 'package:flutterapp/signup.dart';
 
 import 'chats.dart';
+import 'database.dart';
 
 void main() {
   runApp(
@@ -25,6 +27,7 @@ class _SignInState extends State<SignIn> {
   final formKey = GlobalKey<FormState>();
 
   bool isLoading = false;
+  QuerySnapshot _snapshot;
 
   @override
   Widget build(BuildContext context) {
@@ -188,22 +191,26 @@ class _SignInState extends State<SignIn> {
 
   signMeIn() {
     if (formKey.currentState.validate()) {
+      Functions.saveUserEmailSharedPreference(e.text);
+      Database().getUserByUserEmail(e.text).then((val) {
+        _snapshot = val;
+        Functions.saveUserNameSharedPreference(
+            _snapshot.documents[0].data["name"]);
+      });
 
       setState(() {
         isLoading = true;
       });
 
-//      new Authentications().signInWithEmailAndPassword(e.text, p.text).then((val) {
-//        print("$val");
+      Authentications().signInWithEmailAndPassword(e.text, p.text).then((val) {
+        print("$val");
 
-//        if (val != null) {
-//          Functions.saveUserLoggedInSharedPreference(true);
+        if (val != null) {
+          Functions.saveUserLoggedInSharedPreference(true);
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => Chats()));
-//        }
-//      });
+        }
+      });
     }
   }
-
-
 }
