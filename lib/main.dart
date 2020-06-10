@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutterapp/chats.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:splashscreen/splashscreen.dart';
 
@@ -23,7 +24,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return SplashScreen(
       seconds: 10,
-      navigateAfterSeconds: SignIn(),
+//      navigateAfterSeconds: SignIn(),
+    navigateAfterSeconds: Chats(),
       title: Text(
         'WhatsUp !',
         style: GoogleFonts.lato(
