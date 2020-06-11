@@ -34,6 +34,7 @@ class _SignInState extends State<SignIn> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.red.shade700,
           leading: Icon(AntDesign.login),
           title: Text('Sign in page'),
         ),
@@ -103,13 +104,18 @@ class _SignInState extends State<SignIn> {
                   child: Padding(
                     padding:
                         EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
-                    child: Container(
-                      child: Text(
-                        'Forgot password ?',
-                        style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.bold),
+                    child: GestureDetector(
+                      onTap: (){
+                        Authentications().forgotPass(e.text);
+                      },
+                      child: Container(
+                        child: Text(
+                          'Forgot password ?',
+                          style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                   ),

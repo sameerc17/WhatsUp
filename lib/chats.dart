@@ -46,7 +46,7 @@ class _ChatsState extends State<Chats> {
                       snapshot.data.documents[index].data["chatroomID"]);
                 })
             : Container(
-                color: Colors.orange,
+                color: Colors.grey.shade300,
               );
       },
     );
@@ -134,9 +134,9 @@ class _ChatsState extends State<Chats> {
     Database().getUserByUsername(s.text).then((val) {
       setState(() {
         _querySnapshot = val;
-        ispresent = true;
+        if (val.toString() != null) ispresent = true;
       });
-//      print(val.toString());
+      print(val.toString());
     });
   }
 
@@ -164,6 +164,8 @@ class _ChatsState extends State<Chats> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.red.shade700,
           title: Text('Chatroom'),
           leading: Icon(
             Ionicons.ios_chatbubbles,
@@ -192,10 +194,10 @@ class _ChatsState extends State<Chats> {
           children: <Widget>[
             Container(
               height: 50,
-//              color: Colors.black,
+              color: Colors.red.shade700,
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
                 child: Row(
                   children: <Widget>[
                     GestureDetector(
@@ -205,15 +207,19 @@ class _ChatsState extends State<Chats> {
                       },
                       child: Icon(
                         Icons.search,
-                        size: 25,
+                        size: 30,
+                        color: Colors.white,
                       ),
+                    ),
+                    SizedBox(
+                      width: 3,
                     ),
                     Expanded(
                       child: Container(
                         decoration: BoxDecoration(
-//                          borderRadius: BorderRadius.circular(20),
-//                          color: Colors.pinkAccent,
-                            ),
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.white,
+                        ),
                         child: Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: 5.0, vertical: 0.0),
@@ -235,16 +241,32 @@ class _ChatsState extends State<Chats> {
                 ),
               ),
             ),
+            Container(
+              color: Colors.red.shade700,
+              height: 5,
+            ),
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
-              child: ispresent
+              child: s.text != null && ispresent
                   ? Container(
+                      decoration: BoxDecoration(
+                          color: Colors.green.shade100,
+                          border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(15),),
                       child: searchList(),
                     )
-                  : Container(
-                      height: 0,
-                    ),
+                  : (!ispresent
+                      ? Container()
+                      : Container(
+                          height: 40,
+                          child: Center(
+                            child: Text(
+                              'No such user found',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        )),
             ),
             Container(
               width: MediaQuery.of(context).size.width,
@@ -258,7 +280,6 @@ class _ChatsState extends State<Chats> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
                 child: Container(
-                  color: Colors.grey.shade300,
                   child: chatroomList(),
                 ),
               ),
@@ -284,14 +305,13 @@ class chatroomTile extends StatelessWidget {
             MaterialPageRoute(builder: (context) => Conversation(chatID)));
       },
       child: Container(
-        color: Colors.black26,
         padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 7.5),
         child: Row(
           children: <Widget>[
             Container(
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Colors.red,
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Padding(
@@ -307,7 +327,7 @@ class chatroomTile extends StatelessWidget {
             ),
             Text(
               '$username',
-              style: TextStyle(color: Colors.white, fontSize: 20),
+              style: TextStyle(color: Colors.black, fontSize: 20),
             ),
           ],
         ),

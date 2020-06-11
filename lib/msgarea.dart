@@ -70,6 +70,7 @@ class _ConversationState extends State<Conversation> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.red.shade700,
         title: Text('Chat screen'),
       ),
       body: Column(
@@ -84,8 +85,8 @@ class _ConversationState extends State<Conversation> {
             padding: const EdgeInsets.all(8.0),
             child: Container(
               decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.circular(20),
               ),
               alignment: Alignment.bottomCenter,
               child: Container(
@@ -94,7 +95,7 @@ class _ConversationState extends State<Conversation> {
                   children: <Widget>[
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: TextField(
                           controller: msg,
                           style: TextStyle(fontSize: 17.0),
@@ -120,7 +121,7 @@ class _ConversationState extends State<Conversation> {
                         padding: EdgeInsets.all(10.0),
                         child: Icon(Icons.send),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -141,17 +142,18 @@ class MessageTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 20.0),
       width: MediaQuery.of(context).size.width,
       alignment: SentByMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
-        margin: EdgeInsets.symmetric(vertical: 8.0),
+        padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+        margin: SentByMe?EdgeInsets.fromLTRB(100,5,5,0):EdgeInsets.fromLTRB(5,5,100,0),
         decoration: BoxDecoration(
             gradient: LinearGradient(
+              begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
                 colors: SentByMe
-                    ? [Color(0xff007EF4), Color(0xff2A75BC)]
-                    : [Color(0xff007EF4), Color(0xff2A75BC)]),
+                    ? [Color(0xff870000), Color(0xff000a05)]
+                    : [Color(0xff000a05), Color(0xff870000)]),
             borderRadius: SentByMe
                 ? BorderRadius.only(
                     topLeft: Radius.circular(20.0),

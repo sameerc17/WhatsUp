@@ -33,6 +33,7 @@ class _SignUpState extends State<SignUp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.red.shade700,
           leading: Icon(Icons.person),
           title: Text('Sign up page'),
         ),

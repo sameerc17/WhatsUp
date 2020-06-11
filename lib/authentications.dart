@@ -31,7 +31,7 @@ class Authentications {
     }
   }
 
-  Future resetPass(String email) async {
+  Future forgotPass(String email) async {
     try {
       return await auth.sendPasswordResetEmail(email: email);
     } catch (e) {
